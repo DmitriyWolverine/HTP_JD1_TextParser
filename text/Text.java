@@ -1,10 +1,12 @@
 package by.htp.text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Text {
 	private String title;
-	private ArrayList<Paragraph> paragraphs;
+	private List<Paragraph> paragraphs;
+	//private List<Sentence> sentences;
 	
 	public Text() {
 		title = "Empty title";
@@ -32,14 +34,22 @@ public class Text {
 		this.title = title;
 	}
 
-	public ArrayList<Paragraph> getParagraphs() {
+	public List<Paragraph> getParagraphs() {
 		return paragraphs;
 	}
 
-	public void setParagraphs(ArrayList<Paragraph> paragraphs) {
+	public void setParagraphs(List<Paragraph> paragraphs) {
 		this.paragraphs = paragraphs;
 	}
-
+	
+	public int getLengthInSentences() {
+		int res = 0;
+		for(int i = 0 ; i < paragraphs.size() ; ++i ) {
+			res += paragraphs.get(i).sentencesNumber();
+		}
+		return res;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

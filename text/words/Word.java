@@ -1,13 +1,14 @@
 package by.htp.text.words;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import by.htp.text.consoleController.Controller;
 import by.htp.text.symbols.Letter;
 import by.htp.text.symbols.Symbol;
 
 public class Word {
-	private ArrayList<Symbol> word;
+	private List<Symbol> word;
 	private boolean completed = false;
 	
 	public Word() {
@@ -91,7 +92,7 @@ public class Word {
 		}
 	}
 	
-	public ArrayList<Symbol> getWord() {
+	public List<Symbol> getWord() {
 		return word;
 	}
 	

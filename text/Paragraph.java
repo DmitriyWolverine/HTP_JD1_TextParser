@@ -1,11 +1,12 @@
 package by.htp.text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import by.htp.text.symbols.Symbol;
 
 public class Paragraph {
-	private ArrayList<Sentence> paragraph ;
+	private List<Sentence> paragraph ;
 	private boolean finished;
 	
 	public Paragraph() {
@@ -58,7 +59,7 @@ public class Paragraph {
 		return res;
 	}
 
-	public ArrayList<Sentence> getParagraph() {
+	public List<Sentence> getParagraph() {
 		return paragraph;
 	}
 
@@ -72,6 +73,10 @@ public class Paragraph {
 
 	public void setFinished(boolean finished) {
 		this.finished = finished;
+	}
+	
+	public int sentencesNumber() {
+		return paragraph.size();
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package by.htp.text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import by.htp.text.consoleController.Controller;
 import by.htp.text.symbols.Letter;
@@ -9,11 +10,13 @@ import by.htp.text.symbols.Symbol;
 import by.htp.text.words.Word;
 
 public class Sentence {
-	private ArrayList<Symbol> sentence ;
+	private List<Symbol> sentence ;
 	private boolean finished;
+	private List<Word> sentenceInWords;
 	
 	public Sentence() {
 		sentence = new ArrayList<>();
+		sentenceInWords = new ArrayList<>();
 	}
 	
 	public Sentence(ArrayList<Symbol> sentence ) {
@@ -27,13 +30,17 @@ public class Sentence {
 	public void addSymbol(Symbol s) {
 		if ( finished ) {
 			if(s.getValue() == '\n'){
-				sentence.add(s);
+				PunctuationSign sign = new PunctuationSign ( s.getValue() );
+				sentence.add(sign);
 			}
-			Controller.printMessageToConsole("The sentence if finished!");
+			if(s.getValue() == '\'' || s.getValue() == '\"'){
+				PunctuationSign sign = new PunctuationSign ( s.getValue() );
+				sentence.add(sign);
+			}
 			return;
 		}
-		if(s instanceof PunctuationSign ) {
-			PunctuationSign sign = (PunctuationSign) s;
+		if(!s.isDigitOrLetter() ) {
+			PunctuationSign sign = new PunctuationSign ( s.getValue() );
 			if(sign.isEndOfTheSentence()) {
 				sentence.add(s);
 				finished = true;
@@ -150,8 +157,9 @@ public class Sentence {
 		deleteWord( getWords()[index] );
 	}
 	
-	public Word[] getWords() {
-		ArrayList<Word> words = new ArrayList<Word>();
+	
+	public void parseToWords() {
+		List<Word> words = new ArrayList<Word>();
 		Word curWord;
 		for(int i = 0 ; i < lengthOfSentence() ; ) {
 			curWord = new Word();
@@ -163,10 +171,14 @@ public class Sentence {
 			words.add(curWord);
 			i++;
 		}
-		return words.toArray(new Word[words.size()]);
+		this.sentenceInWords = words;
 	}
 	
-	public void removeExtraSpaces() {
+	public Word[] getWords() {
+		return sentenceInWords.toArray(new Word[sentenceInWords.size()]);
+	}
+
+	public void removeExtraSpacesInSentence() {
 		for(int i = 0 ; i < sentence.size() ; ++i) {
 			if(sentence.get(i) instanceof PunctuationSign) {
 				PunctuationSign sign = (PunctuationSign) sentence.get(i);
@@ -185,6 +197,10 @@ public class Sentence {
 				}
 			}
 		}
+	}
+	
+	public boolean isFinished() {
+		return finished;
 	}
 
 	@Override

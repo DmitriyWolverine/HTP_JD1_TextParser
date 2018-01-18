@@ -23,8 +23,8 @@ public class PunctuationSign extends Symbol {
 	
 	public boolean isEndOfTheSentence() {
 		if( super.getValue() == '!' ||  super.getValue() == '?' || super.getValue() == '.' || super.getValue() == ':') {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
